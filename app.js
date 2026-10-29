@@ -8,7 +8,10 @@ function add() {
         list.innerHTML += `
         <tr class="bg-slate-500">
             <td class="number">1</td>
-            <td class="text-start task p-2">${task}</td>
+            <td class="text-start  p-2">
+                <input type="checkbox" onchange="completeTask(this)"   id="checkbox">
+                <span class="task">  ${task}</span>
+              </td>
             <td class="text-start p-2 cursor-pointer">
                 <button onclick="editTask(this)">Edit</button>
                 <button onclick="this.closest('tr').remove(); updateNumbers();">X</button>
@@ -40,4 +43,35 @@ function updateNumbers() {
     rows.forEach(function(row, i) {
         row.querySelector('.number').textContent = i + 1;
     });
+}
+
+function filterTask(){
+  var search = document.getElementById('search').value.toLowerCase();
+  
+    var rows = document.querySelectorAll('#list tr');
+
+    rows.forEach(function(row) {
+        var taskCell = row.querySelector('.task').textContent.toLowerCase();
+        if (taskCell) {
+            if (taskCell.includes(search)) {
+                row.style.display = ''; // Show the row
+            } else {
+                row.style.display = 'none'; // Hide the row
+            }
+        }
+    });
+
+}
+
+function completeTask(checkbox){
+        
+var task = checkbox.nextElementSibling;
+
+if(checkbox.checked){
+task.style.textDecoration = 'line-through'
+}else{
+task.style.textDecoration = 'none';
+
+}
+
 }
